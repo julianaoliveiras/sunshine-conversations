@@ -32,14 +32,21 @@ app.post('/message', function(req, res) {
 });
 
 async function sendMessage(appId, conversationId){
-    let messagePost = new SunshineConversationsApi.MessagePost();
-    messagePost.setAuthor({type: 'business'});
-    messagePost.setContent({type: 'text', text: 'Olá! Eu sou um Bot!'});
-    let response = await apiInstance.postMessage(appId, conversationId, messagePost);
-    console.log('API RESPONSE:\n', response);
+  const data = new SunshineConversationsApi.MessagePost();
+  data.author = {
+    type: 'business',
+    displayName: "Botzinho",
+    avatarUrl: "https://w1.pngwing.com/pngs/278/853/png-transparent-line-art-nose-chatbot-internet-bot-artificial-intelligence-snout-head-smile-black-and-white.png"
+  };
+  data.content = {
+    type: 'image', 
+    mediaUrl: 'http://bieluk-first-project.herokuapp.com/gifs/compiler-bot.gif'
+  };
+  apiInstance.postMessage(appId, conversationId, data).catch(function (error){ 
+    console.log(error) 
+  });
 }
 
 app.listen(8000, () => {
     console.log('App rodando na porta 8000');
 });
-
